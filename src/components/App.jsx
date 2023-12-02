@@ -1,8 +1,9 @@
 import { Component } from "react"
 import shortid from "shortid";
+
 import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
- 
+import { Filter } from "./Filter/Filter"; 
 
 export class App extends Component {
   state = {
@@ -11,6 +12,7 @@ export class App extends Component {
     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
+    filter: '',
   };
   
   getContacts = (data) => {
@@ -29,17 +31,35 @@ export class App extends Component {
       contacts: prevState.contacts.filter(el => el.id !== id)
     }))
   }
+
+  filterContacts = (event) => {
+    const { value } = event.target;
+    this.setState({ filter: value });
+  }
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase()))
+  }
   
   render() {
-    return(
+    const visibleContacts = this.getVisibleContacts();
+    
+    return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm getContacts={this.getContacts}/>
-      <ContactList 
-          contacts={this.state.contacts}
-          deleteContact={this.deleteContact}
+      
+      <h2>Contacts</h2>
+      <Filter 
+        onChange={this.filterContacts}
+        value={this.state.filter}
       />
-  
+      <ContactList 
+        contacts={visibleContacts}
+        deleteContact={this.deleteContact}
+      />  
     </div>
   );
   }

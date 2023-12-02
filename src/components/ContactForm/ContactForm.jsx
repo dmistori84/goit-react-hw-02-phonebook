@@ -1,4 +1,5 @@
 import { Component } from "react";
+import css from './ContactForm.module.css';
 
 export class ContactForm extends Component{
     state = {
@@ -13,12 +14,6 @@ export class ContactForm extends Component{
     
     handleSubmit = (event) => {
         event.preventDefault();
-        //this.props.onSubmit(this.state);
-        //так:
-        // this.props.getContacts({
-        //     name: this.state.name,
-        // })
-        // або так:
         this.props.getContacts(this.state)
         this.reset();
     }
@@ -29,8 +24,8 @@ export class ContactForm extends Component{
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
+            <form onSubmit={this.handleSubmit} className={css.form}>
+                <label className={css.formLabel}>
                     Name
                     <input
                         type="text"
@@ -40,7 +35,7 @@ export class ContactForm extends Component{
                         required
                     /> 
                 </label>
-                <label>
+                <label className={css.formLabel}>
                     Number
                     <input
                         type="tel"
@@ -50,7 +45,7 @@ export class ContactForm extends Component{
                         required
                     /> 
                 </label>
-                <button type="submit">Add contact</button>      
+                <button type="submit" className={css.btnForm}>Add contact</button>      
             </form>
         )
     }
