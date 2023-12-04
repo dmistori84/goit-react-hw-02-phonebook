@@ -19,7 +19,7 @@ export class App extends Component {
     const newContact = {
       ...data, id: shortid.generate(),
     };
-    const isDublicate = this.state.contacts.find(el => el.name === data.name);
+    const isDublicate = this.state.contacts.find(el => el.name.toLowerCase() === data.name.toLowerCase());
     if (isDublicate) return alert(`The contact "${data.name}" is in the contact list`)
     else this.setState((prevState) => ({
       contacts: [...prevState.contacts, newContact]
